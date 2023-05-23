@@ -1,6 +1,6 @@
-import React from 'react';
 import { Component } from 'react';
 import { nanoid } from 'nanoid';
+import { Container, Section, Title } from './App.styled';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 
@@ -26,17 +26,17 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <section title="Phonebook">
-          <h1>Phonebook</h1>
+      <Container>
+        <Section title="Phonebook">
+          <Title>Phonebook</Title>
           <ContactForm createUser={this.addContact} />
-        </section>
+        </Section>
 
-        <section title="Contacts">
-          <h2>Contacts</h2>
+        <Section title="Contacts">
+          <Title>Contacts</Title>
           <ContactList contacts={this.state.contacts} />
-        </section>
-      </div>
+        </Section>
+      </Container>
     );
   }
 }
