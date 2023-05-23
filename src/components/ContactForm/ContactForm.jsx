@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 class ContactForm extends Component {
   state = {
-    contacts: [],
     name: '',
     number: '',
   };
@@ -22,12 +21,15 @@ class ContactForm extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.onSubmit(this.state);
+    this.props.createUser({
+      name: this.state.name,
+      number: this.state.number,
+    });
     this.reset();
   };
 
   reset = () => {
-    this.setState({ contacts: [], name: '', number: '' });
+    this.setState({ name: '', number: '' });
   };
 
   render() {
