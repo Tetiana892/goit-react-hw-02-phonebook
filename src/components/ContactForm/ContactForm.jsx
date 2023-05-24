@@ -54,6 +54,7 @@ class ContactForm extends Component {
               value={this.state.name}
               onChange={this.handleInputChange}
               id={this.nameInputId}
+              placeholder="Name"
             />
           </LabelInput>
 
@@ -68,6 +69,7 @@ class ContactForm extends Component {
               value={this.state.number}
               onChange={this.handleInputChange}
               id={this.numberInputId}
+              placeholder="+0-00-00-00"
             />
           </LabelInput>
         </InputContainer>

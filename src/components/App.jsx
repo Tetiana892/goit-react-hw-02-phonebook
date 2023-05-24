@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 import { Container, Section, Title } from './App.styled';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
+import Filter from './Filter/Filter';
 
 class App extends Component {
   state = {
@@ -17,11 +18,24 @@ class App extends Component {
     number: '',
   };
 
-  // Добавляет контакт в список
+  // Додає контакт у список
+
   addContact = ({ name, number }) => {
     this.setState(({ contacts }) => ({
       contacts: [{ name, number, id: nanoid() }, ...contacts],
     }));
+  };
+
+  // видаляє контакт
+
+  deleteContact = contactId => {
+    this.setState(prev => ({
+      contacts: prev.contacts.filter(contact => contact.id !== contactId),
+    }));
+  };
+
+  handleFilter = e => {
+    this.setState({ filter: e.currentTarget.value });
   };
 
   render() {
@@ -34,7 +48,11 @@ class App extends Component {
 
         <Section title="Contacts">
           <Title>Contacts</Title>
-          <ContactList contacts={this.state.contacts} />
+          <Filter value={this.filter} onChange={this.handleFilter} />
+          <ContactList
+            contacts={this.state.contacts}
+            onDeleteContact={this.deleteContact}
+          />
         </Section>
       </Container>
     );
