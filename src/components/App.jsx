@@ -21,6 +21,21 @@ class App extends Component {
   // Додає контакт у список
 
   addContact = ({ name, number }) => {
+    const normalizedFind = name.toLowerCase();
+    const findName = this.state.contacts.find(
+      contact => contact.name.toLowerCase() === normalizedFind
+    );
+    if (findName) {
+      return alert(`${name} is already in contacts`);
+    }
+
+    const findNumber = this.state.contacts.find(
+      contact => contact.number === number
+    );
+    if (findNumber) {
+      return alert(`This phone number is already in use.`);
+    }
+
     this.setState(({ contacts }) => ({
       contacts: [{ name, number, id: nanoid() }, ...contacts],
     }));
@@ -38,6 +53,16 @@ class App extends Component {
     this.setState({ filter: e.currentTarget.value });
   };
 
+  // фільтрація по імені
+
+  filterList = () => {
+    const { filter, contacts } = this.state;
+    const normalValue = filter.toLowerCase().trim();
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalValue)
+    );
+  };
+
   render() {
     return (
       <Container>
@@ -50,7 +75,7 @@ class App extends Component {
           <Title>Contacts</Title>
           <Filter value={this.filter} onChange={this.handleFilter} />
           <ContactList
-            contacts={this.state.contacts}
+            contacts={this.filterList()}
             onDeleteContact={this.deleteContact}
           />
         </Section>
