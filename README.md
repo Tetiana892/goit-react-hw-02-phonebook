@@ -1,113 +1,107 @@
 # React homework template
 
-Этот проект был создан при помощи
-[Create React App](https://github.com/facebook/create-react-app). Для знакомства
-и настройки дополнительных возможностей
-[обратись к документации](https://facebook.github.io/create-react-app/docs/getting-started).
+2 - Contact Book.
+Write an application to store your phonebook contacts.
 
-## Создание репозитория по шаблону
+Step 1
+The application should consist of a form and a list of contacts. In the current step, implement adding a contact name and displaying a list of contacts. The application should not save contacts between different sessions (page refresh).
 
-Используй этот репозиторий организации GoIT как шаблон для создания репозитория
-своего проекта. Для этого нажми на кнопку `«Use this template»` и выбери опцию
-`«Create a new repository»`, как показано на изображении.
+Use this input markup with built-in validation for the contact name.
 
-![Creating repo from a template step 1](./assets/template-step-1.png)
+<input
+  type="text"
+  name="name"
+  pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+  title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan."
+  required
+/>
 
-На следующем шаге откроется страница создания нового репозитория. Заполни поле
-его имени, убедись что репозиторий публичный, после чего нажми кнопку
-`«Create repository from template»`.
 
-![Creating repo from a template step 2](./assets/template-step-2.png)
+The state held in the parent component <App> must necessarily be The following form, you can not add new properties.
 
-После того как репозиторий будет создан, необходимо перейти в настройки
-созданного репозитория на вкладку `Settings` > `Actions` > `General` как
-показано на изображении.
+state = {
+  contacts: [],
+  name: ''
+}
 
-![Settings GitHub Actions permissions step 1](./assets/gh-actions-perm-1.png)
+Each contact must be an object with properties name and id. To generate identifiers, use any suitable package, e.g. nanoid. After completing this step, the application should look something like this.
 
-Проскролив страницу до самого конца, в секции `«Workflow permissions»` выбери
-опцию `«Read and write permissions»` и поставь галочку в чекбоксе. Это
-необходимо для автоматизации процесса деплоя проекта.
+component preview
+Step 2.
+Expand the functionality of the app by allowing users to add numbers phone numbers. To do this, add <input type="tel"> to the form, and a property to store its value in the state.
 
-![Settings GitHub Actions permissions step 2](./assets/gh-actions-perm-2.png)
+state = {
+  contacts: [],
+  name: '',
+  number: ''
+}
 
-Теперь у тебя есть личный репозиторий проекта, со структурой файлов и папок
-репозитория-шаблона. Далее работай с ним как с любым другим личным репозиторием,
-клонируй его себе на компьютер, пиши код, делай коммиты и отправляй их на
-GitHub.
+Use this markup of an instance with built-in validation for the contact number.
 
-## Подготовка к работе
+<input
+  type="tel"
+  name="number"
+  pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+  title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+  required
+/>
 
-1. Убедись что на компьютере установлена LTS-версия Node.js.
-   [Скачай и установи](https://nodejs.org/en/) её если необходимо.
-2. Установи базовые зависимости проекта командой `npm install`.
-3. Запусти режим разработки, выполнив команду `npm start`.
-4. Перейди в браузере по адресу [http://localhost:3000](http://localhost:3000).
-   Эта страница будет автоматически перезагружаться после сохранения изменений в
-   файлах проекта.
+After completing this step, the application should look something like this.
 
-## Деплой
+component preview
+Step 3.
+Add a search field that you can use to filter your contact list by name.
 
-Продакшн версия проекта будет автоматически проходить линтинг, собираться и
-деплоиться на GitHub Pages, в ветку `gh-pages`, каждый раз когда обновляется
-ветка `main`. Например, после прямого пуша или принятого пул-реквеста. Для этого
-необходимо в файле `package.json` отредактировать поле `homepage`, заменив
-`your_username` и `your_repo_name` на свои, и отправить изменения на GitHub.
+The search field is a formless intuplet whose value is written to the state (controlled item).
+The filtering logic should be case insensitive.
+state = {
+  contacts: [],
+  filter: '',
+  name: '',
+  number: ''
+}
 
-```json
-"homepage": "https://your_username.github.io/your_repo_name/"
-```
+component preview
+When we work on new functionality, it can be convenient to hardcode some data into a state. This eliminates the need to manually enter data in the interface to test the new functionality. For example, you can use this initial state.
 
-Далее необходимо зайти в настройки GitHub-репозитория (`Settings` > `Pages`) и
-выставить раздачу продакшн версии файлов из папки `/root` ветки `gh-pages`, если
-это небыло сделано автоматически.
+state = {
+  contacts: [
+    {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
+    {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
+    {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
+    {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
+  ],
+  filter: '',
+  name: '',
+  number: ''
+}
 
-![GitHub Pages settings](./assets/repo-settings.png)
+Step 4.
+If your application is implemented in a single component <App>, perform refactoring by separating the appropriate parts into separate components. In the state of the root component <App> will leave only the contacts and filter properties.
 
-### Статус деплоя
+state = {
+  contacts: [],
+  filter: ''
+}
 
-Статус деплоя крайнего коммита отображается иконкой возле его идентификатора.
+Four components are enough: add contact form, contact list contact list, contact list item, and search filter.
 
-- **Желтый цвет** - выполняется сборка и деплой проекта.
-- **Зеленый цвет** - деплой завершился успешно.
-- **Красный цвет** - во время линтинга, сборки или деплоя произошла ошибка.
+After the refactoring, the root component of the application will look like this.
 
-Более детальную информацию о статусе можно посмотреть кликнув по иконке, и в
-выпадающем окне перейти по ссылке `Details`.
+<div>
+  <h1>Phonebook</h1>
+  <ContactForm ... />
 
-![Deployment status](./assets/deploy-status.png)
+  <h2>Contacts</h2>
+  <Filter ... />
+  <ContactList ... />
+</div>
 
-### Живая страница
+Step 5
+Deny the user the ability to add contacts whose names are already in the phonebook. If you try to do so, print alert with a warning.
 
-Через какое-то время, обычно пару минут, живую страницу можно будет посмотреть
-по адресу указанному в отредактированном свойстве `homepage`. Например, вот
-ссылка на живую версию для этого репозитория
-[https://goitacademy.github.io/react-homework-template](https://goitacademy.github.io/react-homework-template).
+component preview
+Step 6
+Extend the functionality of the app by allowing the user to delete previously saved contacts.
 
-Если открывается пустая страница, убедись что во вкладке `Console` нет ошибок
-связанных с неправильными путями к CSS и JS файлам проекта (**404**). Скорее
-всего у тебя неправильное значение свойства `homepage` в файле `package.json`.
-
-### Маршрутизация
-
-Если приложение использует библиотеку `react-router-dom` для маршрутизации,
-необходимо дополнительно настроить компонент `<BrowserRouter>`, передав в пропе
-`basename` точное название твоего репозитория. Слеш в начале строки обязателен.
-
-```jsx
-<BrowserRouter basename="/your_repo_name">
-  <App />
-</BrowserRouter>
-```
-
-## Как это работает
-
-![How it works](./assets/how-it-works.png)
-
-1. После каждого пуша в ветку `main` GitHub-репозитория, запускается специальный
-   скрипт (GitHub Action) из файла `.github/workflows/deploy.yml`.
-2. Все файлы репозитория копируются на сервер, где проект инициализируется и
-   проходит линтинг и сборку перед деплоем.
-3. Если все шаги прошли успешно, собранная продакшн версия файлов проекта
-   отправляется в ветку `gh-pages`. В противном случае, в логе выполнения
-   скрипта будет указано в чем проблема.
+component preview
